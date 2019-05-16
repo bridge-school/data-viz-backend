@@ -10,4 +10,4 @@ aws s3 cp s3://"${FIREBASE_BUCKET}/${TEAM_NAME}-firebase.json" "firebase-credent
 git archive -v -o artifact.zip --format=zip HEAD
 zip -rv artifact.zip firebase-credentials.json
 
-aws s3 sync artifact.zip s3://"${BUCKET}"
+aws s3 cp artifact.zip s3://"${BUCKET}"
