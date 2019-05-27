@@ -12,7 +12,7 @@ const app = express();
 // Imports for parsing data
 const fs = require('fs');
 const csvParser = require('csv-parser');
-const input = "./src/data.csv";
+const input = "/Users/leandra_reid/code/bridge-project/data-viz-backend/src/data.csv";
 const db = require('./db/index.js');
 
 // The port the express app will listen on
@@ -31,34 +31,44 @@ if (process.env.NODE_ENV !== "test") {
   });
 }
 // we initialize an empty array to contain our data
-const results = [];
+// const results = [];
 
-fs.createReadStream(input)
-  .pipe(csvParser({
+// fs.createReadStream(input)
+//   .pipe(csvParser({
     // we separate our csv data based on comma separation
     separator: ','
-  }))
-  .on('data', (data) => results.push(data))
-  .on('end', () => {
-    // db.collection('cohorts').set({
-
-    //   Cohort: 'cohort-8',
-    //   'SHORTLIST? (yes/no)': 'yes',
-    //   'Applicant ID': '8d7d0e85-9616-4829-9021-97e44d02c4a8',
-    //   'How do you identify?': 'Woman',
-    //   'What pronouns should we use?': 'She/her',
-    //   'Do you identify as any of the following? Please check all that apply.': 'LGBTQIA+, Neurodiverse',
-    //   'How did you hear about Bridge?': 'Friend or family member',
-    //   'Have you applied to any Bridge cohorts before?': 'Cohort 5 (September 2018 - November 2018)',
-    //   'Current employment status': 'Employed full time',
-    //   'Will you be looking for a new job in June 2019 (when you graduate from Bridge)?': 'No',
-    //   'Have you attended any web development focused bootcamps?': 'HackerYou',
-    //   'Submitted At': '2/24/2019 19:51:51'
-      // results
+  // }))
+  //convert data format here --> create new variable
+  //interate through results array in end stream
+  // .on('data', (data) => results.push(data))
+  // .on('end', () => {
+    //loop through rows, set document within
+    //foreach
+    //each document has unique identifier
+    // results.forEach(applicant => {
+      // console.log(applicant)
+      // db.collection('applicants').doc(applicant["Applicant ID"]).set({
+      //   ...applicant
+      // })
     // })
-    console.log(results);
+
+
+    // console.log(results);
+  // });
+
+let applicantsRef = db.collection('applicants');
+let allApplicants = applicantsRef.get()
+  .then(snapshot => {
+    snapshot.forEach(doc => {
+      // console.log(doc.id, '=>', doc.data());
+      // console.log(doc.data()["Cohort"]);
+      console.log(doc.data()["Do you identify as any of the following? Please check all that apply."]);
+    });
+  })
+  .catch(err => {
+    console.log('Error getting documents', err);
   });
-  // console.log(results)
+
 
 module.exports = {
   app
