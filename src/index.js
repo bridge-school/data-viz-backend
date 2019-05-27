@@ -12,7 +12,7 @@ const app = express();
 // Imports for parsing data
 const fs = require('fs');
 const csvParser = require('csv-parser');
-const input = "/Users/leandra_reid/code/bridge-project/data-viz-backend/src/data.csv";
+// const input = "./src/data.csv";
 const db = require('./db/index.js');
 
 // The port the express app will listen on
