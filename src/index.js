@@ -30,13 +30,23 @@ if (process.env.NODE_ENV !== "test") {
     logger.info(`🎧 Listening at http://localhost:${port}/`);
   });
 }
+
+//fs.createReadStream seeded our firebase DB with the parsed CSV data from csv-parser package
+//Since the data is already in the db, we don't need to run the function each time this file is run.
+
+
+
+
+
+
+
 // we initialize an empty array to contain our data
 // const results = [];
 
 // fs.createReadStream(input)
 //   .pipe(csvParser({
     // we separate our csv data based on comma separation
-    separator: ','
+    //separator: ','
   // }))
   //convert data format here --> create new variable
   //interate through results array in end stream
@@ -51,12 +61,20 @@ if (process.env.NODE_ENV !== "test") {
       //   ...applicant
       // })
     // })
-
-
-    // console.log(results);
   // });
 
+
+
+
+
+
+//retrieving the 'applicants' collection from the db
 let applicantsRef = db.collection('applicants');
+
+//accessing the applicants data in the db with the firebase get promise, then can access data within!
+//need to call .data() method on the firebase information, then can pass in a key inside of square brackets to access each property
+//Firebase has sort/search functionality built in, that might be a route (hehe) to explore: search by cohort, then pass that to the front end
+
 let allApplicants = applicantsRef.get()
   .then(snapshot => {
     snapshot.forEach(doc => {
