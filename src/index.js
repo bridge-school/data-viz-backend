@@ -86,6 +86,7 @@ let allApplicants = applicantsRef.get()
   .catch(err => {
     console.log('Error getting documents', err);
   });
+  // console.log(results)
 
 
 module.exports = {
