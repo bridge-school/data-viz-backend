@@ -49,8 +49,14 @@ fs.createReadStream(input)
 
 
 
+let string1="";
 
-
+const scrub = (object1) =>{
+  Object.keys(object1).forEach(function (key) {
+    console.log(key, object1[key]);
+    // `This is ${key}: ${object1[key]}`;
+  });
+};
 
 
 // we initialize an empty array to contain our data
@@ -61,19 +67,27 @@ fs.createReadStream(input)
     // we separate our csv data based on comma separation
     //separator: ','
   // }))
-  //convert data format here --> create new variable
-  //interate through results array in end stream
+  // convert data format here --> create new variable
+  // interate through results array in end stream
   // .on('data', (data) => results.push(data))
   // .on('end', () => {
-    //loop through rows, set document within
-    //foreach
-    //each document has unique identifier
+    // loop through rows, set document within
+    // foreach
+    // each document has unique identifier
+    // console.log(results.forEach(applicant => {console.log(scrub(applicant))}));
+
+
+    // console.log(results.map(applicant => scrub(applicant)));
+
     // results.forEach(applicant => {
-      // console.log(applicant)
-      // db.collection('applicants').doc(applicant["Applicant ID"]).set({
-      //   ...applicant
-      // })
+    //   console.log(applicant)
+    //   db.collection('candidates').doc(applicant["Applicant ID"]).set({
+    //     ...applicant
+    //   })
     // })
+
+    //results is an array: this is how to navigate through it
+    // console.log(results[0]['How do you identify?'])
   // });
 
 
@@ -88,18 +102,20 @@ let applicantsRef = db.collection('applicants');
 //need to call .data() method on the firebase information, then can pass in a key inside of square brackets to access each property
 //Firebase has sort/search functionality built in, that might be a route (hehe) to explore: search by cohort, then pass that to the front end
 
-let allApplicants = applicantsRef.get()
-  .then(snapshot => {
-    snapshot.forEach(doc => {
-      // console.log(doc.id, '=>', doc.data());
-      // console.log(doc.data()["Cohort"]);
-      console.log(doc.data()["Do you identify as any of the following? Please check all that apply."]);
-    });
-  })
-  .catch(err => {
-    console.log('Error getting documents', err);
-  });
-  // console.log(results)
+// let allApplicants = applicantsRef.get()
+//   .then(snapshot => {
+//     snapshot.forEach(doc => {
+//       console.log(doc.data());
+//       // console.log(doc.id, '=>', doc.data());
+//       // console.log(doc.data()["Cohort"]);
+//       console.log(doc.data()["Do you identify as any of the following? Please check all that apply."]);
+//     });
+//   })
+//   .catch(err => {
+//     console.log('Error getting documents', err);
+//   });
+
+
 
 
 module.exports = {
