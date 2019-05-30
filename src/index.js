@@ -82,10 +82,8 @@ const scrub = (object1) =>{
 
 
 
-
-
 //retrieving the 'applicants' collection from the db
-// let applicantsRef = db.collection('applicants');
+let applicantsRef = db.collection('applicants');
 
 //accessing the applicants data in the db with the firebase get promise, then can access data within!
 //need to call .data() method on the firebase information, then can pass in a key inside of square brackets to access each property
