@@ -12,6 +12,7 @@ const app = express();
 // Imports for parsing data
 const fs = require('fs');
 const csvParser = require('csv-parser');
+
 // const input = "./src/data.csv";
 const db = require('./db/index.js');
 
@@ -30,6 +31,18 @@ if (process.env.NODE_ENV !== "test") {
     logger.info(`🎧 Listening at http://localhost:${port}/`);
   });
 }
+// we initialize an empty array to contain our data
+const results = [];
+
+fs.createReadStream(input)
+  .pipe(csvParser({
+    // we separate our csv data based on comma separation
+    separator: ',',
+  }))
+  .on('data', (data) => results.push(data))
+  .on('end', () => {
+    console.log(results);
+  });
 
 //fs.createReadStream seeded our firebase DB with the parsed CSV data from csv-parser package
 //Since the data is already in the db, we don't need to run the function each time this file is run.
