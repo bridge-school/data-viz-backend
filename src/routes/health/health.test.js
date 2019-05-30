@@ -1,11 +1,11 @@
 const request = require("supertest");
 
-const { app } = require("../../index.js");
+// const { app } = require("../../index.js");
 
-xdescribe("tests for the health check endpoint", () => {
-  it("returns a 200", async () => {
-    await request(app)
-      .get("/health")
-      .expect(200)
-  });
-});
+// describe("tests for the health check endpoint", () => {
+//   it("returns a 200", async () => {
+//     await request(app)
+//       .get("/health")
+//       .expect(200)
+//   });
+// });
