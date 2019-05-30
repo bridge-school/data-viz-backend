@@ -52,11 +52,6 @@ if (process.env.NODE_ENV !== "test") {
 // we initialize an empty array to contain our data
 
 
-    // results.forEach(applicant => {
-    //   console.log(applicant)
-      // db.collection('applicants').doc(applicant["Applicant ID"]).set({
-      //   ...applicant
-      // })
     // })
 
     //results is an array: this is how to navigate through it
