@@ -10,10 +10,10 @@ const { errorHandler } = require("./middleware/error-handler");
 const app = express();
 
 // Imports for parsing data
-// const fs = require('fs');
-// const csvParser = require('csv-parser');
+const fs = require('fs');
+const csvParser = require('csv-parser');
 // const input = "./src/data.csv";
-// const db = require('./db/index.js');
+const db = require('./db/index.js');
 
 // The port the express app will listen on
 const port = process.env.PORT || 8081;
@@ -52,7 +52,7 @@ const scrub = (object1) =>{
 // fs.createReadStream(input)
 //   .pipe(csvParser({
     // we separate our csv data based on comma separation
-  //   separator: ','
+    //separator: ','
   // }))
   // convert data format here --> create new variable
   // interate through results array in end stream
