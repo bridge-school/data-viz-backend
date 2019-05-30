@@ -32,58 +32,26 @@ if (process.env.NODE_ENV !== "test") {
   });
 }
 // we initialize an empty array to contain our data
-const results = [];
+// const results = [];
 
-fs.createReadStream(input)
-  .pipe(csvParser({
-    // we separate our csv data based on comma separation
-    separator: ',',
-  }))
-  .on('data', (data) => results.push(data))
-  .on('end', () => {
-    console.log(results);
-  });
+// fs.createReadStream(input)
+//   .pipe(csvParser({
+//     // we separate our csv data based on comma separation
+//     separator: ',',
+//   }))
+//   .on('data', (data) => results.push(data))
+//   .on('end', () => {
+//     console.log(results);
+//   });
 
 //fs.createReadStream seeded our firebase DB with the parsed CSV data from csv-parser package
 //Since the data is already in the db, we don't need to run the function each time this file is run.
 
 
 
-let string1="";
-
-const scrub = (object1) =>{
-  Object.keys(object1).forEach(function (key) {
-    console.log(key, object1[key]);
-    // `This is ${key}: ${object1[key]}`;
-  });
-};
-
-
 // we initialize an empty array to contain our data
-// const results = [];
-
-// fs.createReadStream(input)
-//   .pipe(csvParser({
-    // we separate our csv data based on comma separation
-    //separator: ','
-  // }))
-  // convert data format here --> create new variable
-  // interate through results array in end stream
-  // .on('data', (data) => results.push(data))
-  // .on('end', () => {
-    // loop through rows, set document within
-    // foreach
-    // each document has unique identifier
-    // console.log(results.forEach(applicant => {console.log(scrub(applicant))}));
 
 
-    // console.log(results.map(applicant => scrub(applicant)));
-
-    // results.forEach(applicant => {
-    //   console.log(applicant)
-    //   db.collection('candidates').doc(applicant["Applicant ID"]).set({
-    //     ...applicant
-    //   })
     // })
 
     //results is an array: this is how to navigate through it
