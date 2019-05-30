@@ -12,7 +12,8 @@ const app = express();
 // Imports for parsing data
 const fs = require('fs');
 const csvParser = require('csv-parser');
-const input = "./src/data.csv";
+
+// const input = "./src/data.csv";
 const db = require('./db/index.js');
 
 // The port the express app will listen on
@@ -30,51 +31,26 @@ if (process.env.NODE_ENV !== "test") {
     logger.info(`🎧 Listening at http://localhost:${port}/`);
   });
 }
+// we initialize an empty array to contain our data
+// const results = [];
+
+// fs.createReadStream(input)
+//   .pipe(csvParser({
+//     // we separate our csv data based on comma separation
+//     separator: ',',
+//   }))
+//   .on('data', (data) => results.push(data))
+//   .on('end', () => {
+//     console.log(results);
+//   });
 
 //fs.createReadStream seeded our firebase DB with the parsed CSV data from csv-parser package
 //Since the data is already in the db, we don't need to run the function each time this file is run.
 
 
 
-let string1="";
-
-const scrub = (object1) =>{
-  Object.keys(object1).forEach(function (key) {
-    console.log(key, object1[key]);
-    // `This is ${key}: ${object1[key]}`;
-  });
-};
-
-
 // we initialize an empty array to contain our data
-const results = [];
 
-fs.createReadStream(input)
-  .pipe(csvParser({
-    // we separate our csv data based on comma separation
-    separator: ','
-  }))
-  // convert data format here --> create new variable
-  // interate through results array in end stream
-  .on('data', (data) => results.push(data))
-  .on('end', () => {
-    // loop through rows, set document within
-    // foreach
-    // each document has unique identifier
-
-    results.forEach(applicant => {
-      Object.keys(applicant).forEach(key =>{
-        applicant[key] = applicant[key]
-          .replace(/^,/, "")
-          .trim();
-      });
-      db.collection('cohorts').doc(applicant["Applicant ID"]).set({
-        ...applicant
-      })
-    });
-    // console.log(results)
-    // console.log(results.map(applicant => scrub(applicant)));
-  });
 
     // results.forEach(applicant => {
     //   console.log(applicant)
