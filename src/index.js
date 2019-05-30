@@ -12,7 +12,7 @@ const app = express();
 // Imports for parsing data
 const fs = require('fs');
 const csvParser = require('csv-parser');
-// const input = "./src/data.csv";
+const input = "./src/data.csv";
 const db = require('./db/index.js');
 
 // The port the express app will listen on
@@ -47,30 +47,40 @@ const scrub = (object1) =>{
 
 
 // we initialize an empty array to contain our data
-// const results = [];
+const results = [];
 
-// fs.createReadStream(input)
-//   .pipe(csvParser({
+fs.createReadStream(input)
+  .pipe(csvParser({
     // we separate our csv data based on comma separation
-    //separator: ','
-  // }))
+    separator: ','
+  }))
   // convert data format here --> create new variable
   // interate through results array in end stream
-  // .on('data', (data) => results.push(data))
-  // .on('end', () => {
+  .on('data', (data) => results.push(data))
+  .on('end', () => {
     // loop through rows, set document within
     // foreach
     // each document has unique identifier
-    // console.log(results.forEach(applicant => {console.log(scrub(applicant))}));
 
-
+    results.forEach(applicant => {
+      Object.keys(applicant).forEach(key =>{
+        applicant[key] = applicant[key]
+          .replace(/^,/, "")
+          .trim();
+      });
+      db.collection('cohorts').doc(applicant["Applicant ID"]).set({
+        ...applicant
+      })
+    });
+    // console.log(results)
     // console.log(results.map(applicant => scrub(applicant)));
+  });
 
     // results.forEach(applicant => {
     //   console.log(applicant)
-    //   db.collection('candidates').doc(applicant["Applicant ID"]).set({
-    //     ...applicant
-    //   })
+      // db.collection('applicants').doc(applicant["Applicant ID"]).set({
+      //   ...applicant
+      // })
     // })
 
     //results is an array: this is how to navigate through it
