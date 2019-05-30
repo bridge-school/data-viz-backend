@@ -1,9 +1,11 @@
 const request = require("supertest");
 
-const { healthRouter } = require("./health.router");
+const { app } = require("../../index.js");
 
 describe("tests for the health check endpoint", () => {
-  it("returns a 200", () => {
-    expect(true).toBe(true);
+  it("returns a 200", async () => {
+    await request(app)
+      .get("/health")
+      .expect(200)
   });
 });
