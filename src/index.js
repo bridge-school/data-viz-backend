@@ -10,11 +10,11 @@ const { errorHandler } = require("./middleware/error-handler");
 const app = express();
 
 // Imports for parsing data
-const fs = require('fs');
-const csvParser = require('csv-parser');
+const fs = require("fs");
+const csvParser = require("csv-parser");
 
-// const input = "./src/data.csv";
-const db = require('./db/index.js');
+const input = "./src/data.csv";
+const db = require("./db/index.js");
 
 // The port the express app will listen on
 const port = process.env.PORT || 8081;
@@ -31,60 +31,38 @@ if (process.env.NODE_ENV !== "test") {
     logger.info(`🎧 Listening at http://localhost:${port}/`);
   });
 }
-// we initialize an empty array to contain our data
-// const results = [];
+//we initialize an empty array to contain our data
+const results = [];
 
-// fs.createReadStream(input)
-//   .pipe(csvParser({
-//     // we separate our csv data based on comma separation
-//     separator: ',',
-//   }))
-//   .on('data', (data) => results.push(data))
-//   .on('end', () => {
-//     console.log(results);
-//   });
-
-//fs.createReadStream seeded our firebase DB with the parsed CSV data from csv-parser package
-//Since the data is already in the db, we don't need to run the function each time this file is run.
-
-
-
-// we initialize an empty array to contain our data
-
-
-    // })
-
-    //results is an array: this is how to navigate through it
-    // console.log(results[0]['How do you identify?'])
-  // });
-
-
-
-
-
+fs.createReadStream(input)
+  .pipe(
+    csvParser({
+      headers: [
+        "cohort",
+        "shortlist",
+        "applicant_id",
+        "gender",
+        "pronouns",
+        "minority",
+        "bridge_referral_from",
+        "applied_cohort",
+        "employment_status",
+        "seeking_job_after",
+        "bootcamp",
+        "time_submitted",
+        "token"
+      ],
+      mapValues: ({ header, index, value }) => value.toLowerCase()
+    })
+  )
+  .on("data", data => results.push(data))
+  .on("end", () => {
+    results.shift();
+    console.log(results);
+  });
 
 //retrieving the 'applicants' collection from the db
-let applicantsRef = db.collection('applicants');
-
-//accessing the applicants data in the db with the firebase get promise, then can access data within!
-//need to call .data() method on the firebase information, then can pass in a key inside of square brackets to access each property
-//Firebase has sort/search functionality built in, that might be a route (hehe) to explore: search by cohort, then pass that to the front end
-
-// let allApplicants = applicantsRef.get()
-//   .then(snapshot => {
-//     snapshot.forEach(doc => {
-//       console.log(doc.data());
-//       // console.log(doc.id, '=>', doc.data());
-//       // console.log(doc.data()["Cohort"]);
-//       console.log(doc.data()["Do you identify as any of the following? Please check all that apply."]);
-//     });
-//   })
-//   .catch(err => {
-//     console.log('Error getting documents', err);
-//   });
-
-
-
+let applicantsRef = db.collection("applicants");
 
 module.exports = {
   app
