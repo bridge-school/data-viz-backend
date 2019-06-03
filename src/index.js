@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const admin = require("firebase-admin");
+const cors = require('cors');
 
 const router = require("./api");
 const { logger } = require("./utils/logger");
@@ -22,6 +23,7 @@ const port = process.env.PORT || 8081;
 logger.info("🤖 Initializing middleware");
 
 app.use(morgan("tiny", { stream: logger.stream }));
+app.use(cors());
 app.use("/", router);
 app.use(errorHandler);
 
@@ -31,7 +33,6 @@ if (process.env.NODE_ENV !== "test") {
     logger.info(`🎧 Listening at http://localhost:${port}/`);
   });
 }
-<<<<<<< HEAD
 //we initialize an empty array to contain our data
 const results = [];
 
@@ -61,39 +62,6 @@ fs.createReadStream(input)
     results.shift();
     console.log(results);
   });
-=======
-// we initialize an empty array to contain our data
-// const results = [];
-
-// fs.createReadStream(input)
-//   .pipe(csvParser({
-//     // we separate our csv data based on comma separation
-//     separator: ',',
-//   }))
-//   .on('data', (data) => results.push(data))
-//   .on('end', () => {
-//     console.log(results);
-//   });
-
-//fs.createReadStream seeded our firebase DB with the parsed CSV data from csv-parser package
-//Since the data is already in the db, we don't need to run the function each time this file is run.
-
-
-
-// we initialize an empty array to contain our data
-
-
-    // })
-
-    //results is an array: this is how to navigate through it
-    // console.log(results[0]['How do you identify?'])
-  // });
-
-
-
-
-
->>>>>>> 7e32d659e8409e0d1cadb7675e6e134d038897e0
 
 //retrieving the 'applicants' collection from the db
 let applicantsRef = db.collection("applicants");
