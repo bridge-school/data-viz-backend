@@ -10,9 +10,11 @@ const { errorHandler } = require("./middleware/error-handler");
 const app = express();
 
 // Imports for parsing data
-const fs = require('fs');
-const csvParser = require('csv-parser');
+const fs = require("fs");
+const csvParser = require("csv-parser");
+
 const input = "./src/data.csv";
+const db = require("./db/index.js");
 
 // The port the express app will listen on
 const port = process.env.PORT || 8081;
@@ -29,18 +31,38 @@ if (process.env.NODE_ENV !== "test") {
     logger.info(`🎧 Listening at http://localhost:${port}/`);
   });
 }
-// we initialize an empty array to contain our data
+//we initialize an empty array to contain our data
 const results = [];
 
 fs.createReadStream(input)
-  .pipe(csvParser({
-    // we separate our csv data based on comma separation
-    separator: ',',
-  }))
-  .on('data', (data) => results.push(data))
-  .on('end', () => {
+  .pipe(
+    csvParser({
+      headers: [
+        "cohort",
+        "shortlist",
+        "applicant_id",
+        "gender",
+        "pronouns",
+        "minority",
+        "bridge_referral_from",
+        "applied_cohort",
+        "employment_status",
+        "seeking_job_after",
+        "bootcamp",
+        "time_submitted",
+        "token"
+      ],
+      mapValues: ({ header, index, value }) => value.toLowerCase()
+    })
+  )
+  .on("data", data => results.push(data))
+  .on("end", () => {
+    results.shift();
     console.log(results);
   });
+
+//retrieving the 'applicants' collection from the db
+let applicantsRef = db.collection("applicants");
 
 module.exports = {
   app
