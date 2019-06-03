@@ -44,10 +44,10 @@ fs.createReadStream(input)
         "gender",
         "pronouns",
         "minority",
-        "hear_from",
+        "bridge_referral_from",
         "applied_cohort",
-        "employment",
-        "newjob",
+        "employment_status",
+        "seeking_job_after",
         "bootcamp",
         "time_submitted",
         "token"
