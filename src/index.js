@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const admin = require("firebase-admin");
-const cors = require('cors');
+const cors = require("cors");
 
 const router = require("./api");
 const { logger } = require("./utils/logger");
@@ -60,11 +60,19 @@ fs.createReadStream(input)
   .on("data", data => results.push(data))
   .on("end", () => {
     results.shift();
-    console.log(results);
+    results.forEach(result => {
+      //format data remove leading comma
+      Object.keys(result).forEach(key => {
+        result[key] = result[key].replace(/^,/, "").trim();
+      });
+      //add to database
+      db.collection("cohorts")
+        .doc(result["applicant_id"])
+        .set({
+          ...result
+        });
+    });
   });
-
-//retrieving the 'applicants' collection from the db
-let applicantsRef = db.collection("applicants");
 
 module.exports = {
   app
