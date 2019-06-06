@@ -16,3 +16,6 @@ const genderIdentity = (cohort) =>{
 
 console.log(genderIdentity(data.data));
 
+module.exports = function genderHelper(data) {
+  return data;
+};
