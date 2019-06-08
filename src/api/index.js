@@ -5,6 +5,6 @@ const { cohortsRouter } = require("../routes/cohorts/cohorts.router");
 
 const router = express.Router();
 router.use("/health", healthRouter);
-router.use("/cohorts", cohortsRouter);
+router.use("", cohortsRouter);
 
 module.exports = router;
