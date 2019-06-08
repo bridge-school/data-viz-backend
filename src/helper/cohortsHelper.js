@@ -4,9 +4,9 @@ module.exports = function cohortsHelper(cohorts) {
     id in obj ? obj[id]++ : (obj[id] = 1);
     return obj;
   }, {});
-  //format in to new object with key "lable" and "value"
-  const result = Object.entries(counted).map(([lable, value]) => ({
-    lable,
+  //format in to new object with key "label" and "value"
+  const result = Object.entries(counted).map(([label, value]) => ({
+    label,
     value
   }));
 
