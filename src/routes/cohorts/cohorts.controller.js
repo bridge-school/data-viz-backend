@@ -3,10 +3,13 @@ const employmentHelper = require("../../helper/employmentHelper.js");
 const genderHelper = require("../../helper/genderHelper.js");
 const minorityHelper = require("../../helper/minorityHelper.js");
 const bootcampHelper = require("../../helper/bootcampHelper.js");
+const cohortsHelper = require("../../helper/cohortsHelper.js");
+
+const cohortsRef = db.collection("cohorts");
 
 //get all cohorts data
-const cohortsController = (req, res) => {
-  db.collection("cohorts")
+const index = (req, res) => {
+  cohortsRef
     .get()
     .then(snapshot => {
       res.json({
@@ -23,9 +26,9 @@ const cohortsController = (req, res) => {
     });
 };
 
-//get a single cohort data
-const cohortController = (req, res) => {
-  db.collection("cohorts")
+//get a single cohort data for bar graph
+const cohortId = (req, res) => {
+  cohortsRef
     .where("cohort", "==", req.params.id)
     .get()
     .then(snapshot => {
@@ -47,7 +50,27 @@ const cohortController = (req, res) => {
     });
 };
 
+//get application number of all cohorts for line graph and cohort list
+const applicationNumber = (req, res) => {
+  cohortsRef
+    .orderBy("cohort")
+    .get()
+    .then(snapshot => {
+      const cohorts = snapshot.docs.map(doc => {
+        return doc.data().cohort;
+      });
+      res.json({
+        //pass array of cohorts id into helper function to get final results
+        data: cohortsHelper(cohorts)
+      });
+    })
+    .catch(error => {
+      res.json({ error });
+    });
+};
+
 module.exports = {
-  cohortsController,
-  cohortController
+  index,
+  cohortId,
+  applicationNumber
 };
