@@ -1,4 +1,4 @@
-const data = require('../mockData');
+// const data = require('../mockData');
 
 
 const genderIdentity = (cohort) =>{
@@ -14,7 +14,7 @@ const genderIdentity = (cohort) =>{
     // }), {})
 };
 
-console.log(genderIdentity(data.data));
+// console.log(genderIdentity(data.data));
 
 module.exports = function genderHelper(data) {
   return data;
