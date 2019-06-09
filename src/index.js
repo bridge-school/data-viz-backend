@@ -33,46 +33,49 @@ if (process.env.NODE_ENV !== "test") {
     logger.info(`🎧 Listening at http://localhost:${port}/`);
   });
 }
-//we initialize an empty array to contain our data
-const results = [];
 
-fs.createReadStream(input)
-  .pipe(
-    csvParser({
-      headers: [
-        "cohort",
-        "shortlist",
-        "applicant_id",
-        "gender",
-        "pronouns",
-        "minority",
-        "bridge_referral_from",
-        "applied_cohort",
-        "employment_status",
-        "seeking_job_after",
-        "bootcamp",
-        "time_submitted",
-        "token"
-      ],
-      mapValues: ({ header, index, value }) => value.toLowerCase()
-    })
-  )
-  .on("data", data => results.push(data))
-  .on("end", () => {
-    results.shift();
-    results.forEach(result => {
-      //format data remove leading comma
-      Object.keys(result).forEach(key => {
-        result[key] = result[key].replace(/^,/, "").trim();
-      });
-      //add to database
-      db.collection("cohorts")
-        .doc(result["applicant_id"])
-        .set({
-          ...result
-        });
-    });
-  });
+//fs.readStream commented out, can be re-used if need to add any more data!
+
+//we initialize an empty array to contain our data
+// const results = [];
+
+// fs.createReadStream(input)
+//   .pipe(
+//     csvParser({
+//       headers: [
+//         "cohort",
+//         "shortlist",
+//         "applicant_id",
+//         "gender",
+//         "pronouns",
+//         "minority",
+//         "bridge_referral_from",
+//         "applied_cohort",
+//         "employment_status",
+//         "seeking_job_after",
+//         "bootcamp",
+//         "time_submitted",
+//         "token"
+//       ],
+//       mapValues: ({ header, index, value }) => value.toLowerCase()
+//     })
+//   )
+//   .on("data", data => results.push(data))
+//   .on("end", () => {
+//     results.shift();
+//     results.forEach(result => {
+//       //format data remove leading comma
+//       Object.keys(result).forEach(key => {
+//         result[key] = result[key].replace(/^,/, "").trim();
+//       });
+//       //add to database
+//       db.collection("cohorts")
+//         .doc(result["applicant_id"])
+//         .set({
+//           ...result
+//         });
+//     });
+//   });
 
 module.exports = {
   app
