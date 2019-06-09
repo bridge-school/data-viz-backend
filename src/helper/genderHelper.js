@@ -1,3 +1,16 @@
 module.exports = function genderHelper(data) {
-  return data;
-};
+  const cohortData = data
+    .reduce((array, student) => {
+      const studentArray = student.gender.split(', ');
+      return array.concat(studentArray);
+  }, [])
+  .reduce((obj, studentGender)=>{
+    return {
+      ...obj,
+      [studentGender]: (obj[studentGender] || 0) +1
+    }
+  }, {})
+  const genderObj = Object.entries(cohortData).map(([label, value])=>({label, value}));
+
+  return genderObj;
+}
