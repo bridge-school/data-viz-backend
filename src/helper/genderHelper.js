@@ -10,7 +10,7 @@ module.exports = function genderHelper(data) {
       [studentGender]: (obj[studentGender] || 0) +1
     }
   }, {})
-  const genderObj = Object.entries(cohortData).map(([key, value])=>({key, value}));
+  const genderObj = Object.entries(cohortData).map(([label, value])=>({label, value}));
 
   return genderObj;
 }

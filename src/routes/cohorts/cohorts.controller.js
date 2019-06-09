@@ -38,8 +38,8 @@ const cohortId = (req, res) => {
       });
       res.json({
         //pass data to helper functions to format data
-        // gender: genderHelper(data),
-        // minority: minorityHelper(data),
+        gender: genderHelper(data),
+        minority: minorityHelper(data),
         bootcamp: bootcampHelper(data),
         employment_status: employmentHelper(data)
       });
