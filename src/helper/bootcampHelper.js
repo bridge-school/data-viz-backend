@@ -1,38 +1,32 @@
 module.exports = function bootcampHelper(data) {
-  const studentArray = data
-  .reduce((array, student) => {
-    const studentArray = student.bootcamp.split(', ');
-    //have reduce spit out final object
-    return array.concat(studentArray);
-  }, [])
-.reduce((obj, item)=>{
-  return {
-    ...obj,
+  const counted = data
+    .reduce((array, student) => {
+      const bootcampArray = student.bootcamp.split(", ");
+      //have reduce spit out final object
+      return array.concat(bootcampArray);
+    }, [])
+    //remove empty strings
+    .filter(Boolean)
+    .reduce((obj, item) => {
+      return {
+        ...obj,
+        [item]: (obj[item] || 0) + 1
+      };
+    }, {});
 
-  [item] : (obj[item] || 0) +1
-  }
-}, {});
+  //if value is less than 3, group these people to "other"
+  const groupedObject = Object.entries(counted).reduce((obj, cur) => {
+    if (cur[1] < 3) {
+      return { ...obj, others: obj.others ? obj.others + cur[1] : cur[1] };
+    }
+    return { ...obj, [cur[0]]: cur[1] };
+  }, {});
 
-const dataObj = Object.assign(studentArray.map(school =>({
-  label: school[0],
-  value: school[1]
-})))
-// .sort((a,b) =>  a-b)
+  //format in to new object with key "label" and "value"
+  const result = Object.entries(groupedObject).map(([label, value]) => ({
+    label,
+    value
+  }));
 
-  //look at bootcamp, split it, concatenate to accumulator array -- done
-
-  //1. map: comma separate + concatenate into one big array
-  //2. reduce -->
-
-
-  //includes hackeryou, brainstation, no bootcamp, other
-  return dataObj;
+  return result;
 };
-
-
-// const finishedObj = [{ 'label': 'hackeryou', value: 0 },
-// { 'label': 'bitmaker', value: 0 },
-// { 'label': 'other', value: 0 },
-// { 'label': 'i have never attended a bootcamp', value: 0 }
-// ];
-// finishedObj.
