@@ -55,7 +55,7 @@ const applicationNumber = (req, res) => {
     .get()
     .then(snapshot => {
       const cohorts = snapshot.docs.map(doc => {
-        return doc.data();
+        return doc.data().cohort;
       });
       res.json({
         //pass array of cohorts id into helper function to get final results
