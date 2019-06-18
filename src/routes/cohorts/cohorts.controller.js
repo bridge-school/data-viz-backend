@@ -1,9 +1,7 @@
 const db = require("../../db/index");
-const employmentHelper = require("../../helper/employmentHelper.js");
-const genderHelper = require("../../helper/genderHelper.js");
-const minorityHelper = require("../../helper/minorityHelper.js");
-const bootcampHelper = require("../../helper/bootcampHelper.js");
+
 const cohortsHelper = require("../../helper/cohortsHelper.js");
+const barGraphHelper = require("../../helper/barGraphHelper.js");
 
 const cohortsRef = db.collection("cohorts");
 
@@ -38,10 +36,10 @@ const cohortId = (req, res) => {
       });
       res.json({
         //pass data to helper functions to format data
-        gender: genderHelper(data),
-        minority: minorityHelper(data),
-        bootcamp: bootcampHelper(data),
-        employment_status: employmentHelper(data)
+        gender: barGraphHelper(data, "gender"),
+        minority: barGraphHelper(data, "minority"),
+        bootcamp: barGraphHelper(data, "bootcamp"),
+        employment_status: barGraphHelper(data, "employment_status")
       });
     })
 
